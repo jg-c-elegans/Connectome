@@ -1,0 +1,337 @@
+.connectome-notes-widget {
+    padding: 4px 0;
+    user-select: none;
+    overflow-y: auto;
+}
+
+.connectome-notes-empty {
+    padding: 12px 16px;
+    color: var(--theia-descriptionForeground);
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.connectome-notes-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.connectome-notes-group {
+    margin-bottom: 2px;
+}
+
+.connectome-notes-group-header,
+.connectome-notes-tag-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.connectome-notes-group-header:hover,
+.connectome-notes-tag-row:hover,
+.connectome-notes-occurrence:hover {
+    background-color: var(--theia-list-hoverBackground);
+}
+
+.connectome-notes-icon {
+    flex-shrink: 0;
+    color: var(--theia-icon-foreground);
+}
+
+.connectome-notes-group-name {
+    font-weight: 500;
+}
+
+.connectome-notes-group-detail {
+    color: var(--theia-descriptionForeground);
+    font-size: calc(var(--theia-ui-font-size1) * 0.9);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.connectome-notes-occurrence {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px 2px 24px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.connectome-notes-action {
+    flex-shrink: 0;
+    margin-left: auto;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.connectome-notes-action:hover {
+    opacity: 1;
+}
+
+.connectome-notes-snippet {
+    color: var(--theia-descriptionForeground);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.connectome-notes-snippet-highlight {
+    color: var(--theia-textLink-foreground);
+    background-color: var(--theia-editor-findMatchHighlightBackground);
+    border-radius: 2px;
+}
+
+.connectome-notes-tag-pill {
+    color: var(--theia-badge-foreground);
+    background-color: var(--theia-badge-background);
+    border-radius: 8px;
+    padding: 0 8px;
+    line-height: 1.6;
+}
+
+.connectome-notes-count {
+    margin-left: auto;
+    color: var(--theia-descriptionForeground);
+    font-size: calc(var(--theia-ui-font-size1) * 0.9);
+    padding-right: 4px;
+}
+
+.connectome-notes-prop-row {
+    display: flex;
+    gap: 8px;
+    padding: 4px 12px;
+    align-items: flex-start;
+}
+
+.connectome-notes-prop-key {
+    flex: 0 0 64px;
+    color: var(--theia-descriptionForeground);
+    font-size: calc(var(--theia-ui-font-size1) * 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.connectome-notes-prop-val {
+    flex: 1;
+    word-break: break-word;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.connectome-notes-code-sample {
+    margin-top: 8px;
+    padding: 8px;
+    background: var(--theia-textCodeBlock-background);
+    border-radius: 4px;
+    font-family: var(--theia-code-font-family);
+    font-size: calc(var(--theia-code-font-size, 12px));
+    white-space: pre-wrap;
+}
+
+.connectome-notes-section-label {
+    padding: 8px 12px 4px;
+    font-weight: 600;
+    color: var(--theia-descriptionForeground);
+    text-transform: uppercase;
+    font-size: calc(var(--theia-ui-font-size1) * 0.85);
+    letter-spacing: 0.04em;
+}
+
+.connectome-notes-occurrence-row {
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.connectome-notes-link-btn {
+    flex-shrink: 0;
+    padding: 0 8px !important;
+    min-width: auto !important;
+    height: 22px;
+    line-height: 20px;
+    font-size: calc(var(--theia-ui-font-size1) * 0.85);
+}
+
+.connectome-notes-error-icon {
+    color: var(--theia-errorForeground);
+}
+
+.connectome-embed-preview {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.connectome-embed-preview-frame {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: var(--theia-editor-background);
+}
+
+/* ---------- Callout gutter decorations (editor) ---------- */
+
+.connectome-callout-line {
+    background: color-mix(in srgb, var(--theia-focusBorder, #5a36fa) 6%, transparent);
+}
+
+.connectome-callout-gutter-note,
+.connectome-callout-gutter-tip,
+.connectome-callout-gutter-warning,
+.connectome-callout-gutter-important,
+.connectome-callout-gutter-danger,
+.connectome-callout-gutter-example {
+    width: 4px !important;
+    margin-left: 3px;
+    border-radius: 2px;
+}
+
+.connectome-callout-gutter-note { background: #019bfd !important; }
+.connectome-callout-gutter-tip { background: #01c6fd !important; }
+.connectome-callout-gutter-warning { background: #fac93c !important; }
+.connectome-callout-gutter-important { background: #a667f4 !important; }
+.connectome-callout-gutter-danger { background: #f84a5a !important; }
+.connectome-callout-gutter-example { background: #5a36fa !important; }
+
+.connectome-starred-icon {
+    color: #fac93c;
+}
+
+/* ---------- Canvas ---------- */
+
+.connectome-canvas-widget {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+}
+
+.connectome-canvas-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    outline: none;
+    background: var(--theia-editor-background, #050916);
+    color: var(--theia-editor-foreground, #f2f3f5);
+}
+
+.connectome-canvas-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--theia-widget-border, #3b3f89);
+    background: var(--theia-sideBar-background, #191d29);
+    flex-shrink: 0;
+}
+
+.connectome-canvas-hint {
+    margin-left: 8px;
+    color: var(--theia-descriptionForeground);
+    font-size: calc(var(--theia-ui-font-size1) * 0.9);
+}
+
+.connectome-canvas-surface {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    cursor: grab;
+    background-image:
+        radial-gradient(circle, color-mix(in srgb, var(--theia-widget-border, #3b3f89) 45%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.connectome-canvas-surface:active {
+    cursor: grabbing;
+}
+
+.connectome-canvas-surface.linking {
+    cursor: crosshair;
+}
+
+.connectome-canvas-surface.linking .connectome-canvas-card {
+    cursor: crosshair;
+    outline: 1px dashed color-mix(in srgb, var(--theia-focusBorder, #5a36fa) 60%, transparent);
+}
+
+.connectome-canvas-world {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 0 0;
+    width: 1px;
+    height: 1px;
+}
+
+.connectome-canvas-edges {
+    overflow: visible;
+}
+
+.connectome-canvas-card {
+    position: absolute;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--theia-widget-border, #3b3f89);
+    background: var(--theia-sideBar-background, #191d29);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    cursor: grab;
+    user-select: none;
+    overflow: hidden;
+}
+
+.connectome-canvas-card.selected {
+    border-color: var(--theia-focusBorder, #5a36fa);
+    box-shadow: 0 0 0 1px var(--theia-focusBorder, #5a36fa), 0 2px 10px rgba(90, 54, 250, 0.35);
+}
+
+.connectome-canvas-card.note {
+    border-left: 3px solid #a667f4;
+}
+
+.connectome-canvas-card.text {
+    border-left: 3px solid #01c6fd;
+}
+
+.connectome-canvas-card-title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+    color: #a667f4;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.connectome-canvas-card.text .connectome-canvas-card-title {
+    color: #01c6fd;
+}
+
+.connectome-canvas-card-path {
+    font-size: calc(var(--theia-ui-font-size1) * 0.8);
+    color: var(--theia-descriptionForeground);
+    opacity: 0.85;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 4px;
+}
+
+.connectome-canvas-card-body {
+    font-size: calc(var(--theia-ui-font-size1) * 0.9);
+    color: var(--theia-editor-foreground, #f2f3f5);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 7em;
+    overflow: hidden;
+    line-height: 1.35;
+}

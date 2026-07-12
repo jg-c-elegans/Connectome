@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AppInstallerUX
+  xmlns="http://schemas.microsoft.com/msix/appinstallerux"
+  xmlns:ux="http://schemas.microsoft.com/msix/appinstallerux"
+  xmlns:ux2="http://schemas.microsoft.com/msix/appinstallerux/2"
+  IgnorableNamespaces="ux ux2"
+  Version="1.0.0">
+  <UX
+    AccentColor="#5A36FA"
+    BackgroundColor="#050916"
+    FontFamily="Segoe UI"
+    AllowUserInteraction="true"
+    AppNameInTitle="true"
+    HyperLinkFontSize="12">
+    <Icon
+      HorizontalAlignment="center"
+      Logo="Assets\Square96x96Logo.png"
+      TopMargin="48" />
+    <Buttons
+      HorizontalAlignment="center"
+      Text="Connectome IDE"
+      IsSecondaryButtonAccent="false" />
+    <LaunchWhenReady HorizontalAlignment="center" />
+    <AppInformation Mode="flyout" />
+  </UX>
+</AppInstallerUX>

@@ -1,0 +1,820 @@
+/********************************************************************************
+ * Copyright (C) 2020 EclipseSource and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License, which is available in the project root.
+ *
+ * SPDX-License-Identifier: MIT
+ ********************************************************************************/
+
+/* Custom codicon glyphs (Claude/Anthropic, …) — extends stock @vscode/codicons */
+@import "./connectome-codicons.css";
+
+:root {
+    --connectome-branding-logo: url(../icons/Connectome.png);
+    /* JetBrains-style card layout tokens */
+    --connectome-card-radius: 8px;
+    --connectome-tab-radius: 6px;
+    /* Lumino spacing + outer inset use the same gap so margins look even */
+    --connectome-card-gap: 8px;
+    /* Horizontal inset of activity icons inside the rail (also used as inter-icon gap) */
+    --connectome-activity-icon-inset: 6px;
+    /* Space between editor card top border and first code line (~1 line) */
+    --connectome-editor-top-pad: 14px;
+}
+
+/* =============================================================================
+ * Shell card layout (JetBrains-inspired)
+ *
+ * Rules use Lumino `.lm-*` classes only (not legacy Phosphor `.p-*`).
+ * Gaps come from ConnectomeApplicationShell / ConnectomeSidePanelHandler spacing;
+ * handles are transparent so the shell canvas shows through.
+ * Borders are real `border` (not inset box-shadow) so section headers cannot paint over them.
+ *
+ * Critical: Theia sets `#theia-main-content-panel { background: editor-background }`.
+ * That opaque fill is what made split gaps dark and sharp corners bleed past card radii.
+ * ============================================================================= */
+
+/* Canvas behind cards — darker than sidebar/editor fills */
+#theia-app-shell {
+    background-color: var(--theia-titleBar-activeBackground);
+}
+
+/*
+ * Activity icon rails must blend with the shell canvas.
+ * Theia paints `.theia-app-sidebar-container` with `activityBar.background`.
+ * When that color differs from the shell (titleBar), the rail becomes a sharp
+ * rectangle (especially visible in the packaged app where theme CSS vars resolve
+ * cleanly). Force transparent so only hover/selected icon pills paint; the shell
+ * shows through. Same for left/right content panels around the cards.
+ */
+.theia-app-sidebar-container,
+.theia-app-sidebar-container .theia-sidebar-menu,
+.lm-Widget.theia-sidebar-menu,
+.lm-TabBar.theia-app-sides,
+#theia-left-content-panel,
+#theia-right-content-panel {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Bottom gear / extra sidebar menu icons also default to activityBar fill */
+.lm-Widget.theia-sidebar-menu i {
+    background-color: transparent !important;
+}
+
+/*
+ * Dock panels themselves must be transparent so:
+ *  (1) the 8px Lumino spacing between split groups shows canvas (separate cards),
+ *  (2) area outside a child's border-radius is canvas, not a sharp editor rectangle.
+ * Card fills live only on tabBar + widget children.
+ */
+#theia-main-content-panel,
+#theia-bottom-content-panel {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Transparent layout handles: real size from Lumino spacing, canvas shows through.
+ * Kill every Theia/Lumino sash border so only card outlines remain (no extra
+ * vertical line between editor and sidebars). */
+.lm-SplitPanel-handle,
+.lm-DockPanel-handle,
+.theia-split-widget > .lm-SplitPanel > .lm-SplitPanel-handle,
+#theia-left-right-split-panel > .lm-SplitPanel-handle,
+#theia-bottom-split-panel > .lm-SplitPanel-handle,
+#theia-main-content-panel .lm-DockPanel-handle,
+#theia-bottom-content-panel .lm-DockPanel-handle {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Hit-target ::after must stay for resize, but never paint a line */
+.lm-SplitPanel-handle::after,
+.lm-DockPanel-handle::after,
+.lm-SplitPanel-handle:hover::after,
+.lm-DockPanel-handle:hover::after,
+.lm-SplitPanel-handle:active::after,
+.lm-DockPanel-handle:active::after {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Kill Theia's extra vertical line on side content (causes double border on cards).
+ * Core rule: #theia-left-content-panel > .lm-Panel { border-right: activityBar-border }
+ * matches both the activity rail AND the content BoxPanel. */
+#theia-left-content-panel > .lm-Panel,
+#theia-right-content-panel > .lm-Panel,
+#theia-left-content-panel .theia-app-sidebar-container,
+#theia-right-content-panel .theia-app-sidebar-container,
+#theia-left-content-panel,
+#theia-right-content-panel {
+    border-left: none !important;
+    border-right: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Collapsed right/left side: no ghost card border next to the editor */
+#theia-right-content-panel.theia-mod-collapsed > .lm-BoxPanel,
+#theia-left-content-panel.theia-mod-collapsed > .lm-BoxPanel {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* --- Activity bar: JetBrains-style rounded selection (not a left edge line) ---
+ * Inter-icon gap matches the horizontal inset from the rail edge.
+ * padding-top: 0 so the first icon's grey outline is flush with the Explorer card
+ * top (and the editor tabs), matching the tab flush alignment. */
+.lm-TabBar.theia-app-sides .lm-TabBar-content {
+    gap: var(--connectome-activity-icon-inset) 0 !important;
+    padding: 0 0 var(--connectome-activity-icon-inset) 0 !important;
+    align-items: center;
+}
+
+/* No extra offset above the first activity icon */
+.lm-TabBar.theia-app-sides,
+.theia-app-sidebar-container .lm-TabBar.theia-app-sides {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Empty top sidebar menu should not push icons down */
+.theia-app-sidebar-container > .theia-sidebar-menu:first-child:empty,
+.theia-app-sidebar-container > .theia-sidebar-menu:first-child:not(:has(.theia-sidebar-menu-item)) {
+    min-height: 0 !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.lm-TabBar.theia-app-sides .lm-TabBar-tab {
+    margin: 0 var(--connectome-activity-icon-inset) !important;
+    border-radius: 8px !important;
+    width: calc(var(--theia-private-sidebar-tab-width, 48px) - 2 * var(--connectome-activity-icon-inset)) !important;
+    min-width: calc(var(--theia-private-sidebar-tab-width, 48px) - 2 * var(--connectome-activity-icon-inset)) !important;
+    max-width: calc(var(--theia-private-sidebar-tab-width, 48px) - 2 * var(--connectome-activity-icon-inset)) !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    box-sizing: border-box !important;
+}
+
+.lm-TabBar.theia-app-sides .lm-TabBar-tab:hover {
+    color: var(--theia-activityBar-foreground) !important;
+    /* Mix against shell/canvas, not a solid rail slab color */
+    background-color: color-mix(in srgb, var(--theia-foreground) 10%, var(--theia-titleBar-activeBackground, var(--theia-activityBar-background))) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+}
+
+/* Selected view: soft rounded grey pill — remove Theia inset activeBorder line */
+.lm-TabBar.theia-app-left .lm-TabBar-tab.lm-mod-current,
+.lm-TabBar.theia-app-right .lm-TabBar-tab.lm-mod-current,
+.lm-TabBar.theia-app-sides .lm-TabBar-tab.lm-mod-current {
+    color: var(--theia-activityBar-foreground) !important;
+    background-color: color-mix(in srgb, var(--theia-foreground) 14%, var(--theia-titleBar-activeBackground, var(--theia-activityBar-background))) !important;
+    border-radius: 8px !important;
+    border-top: none !important;
+    box-shadow: none !important;
+}
+
+.lm-TabBar.theia-app-sides .lm-TabBar-tabIcon {
+    width: 100% !important;
+}
+
+/*
+ * Activity-bar badge → presence dot (unsaved files / notification count).
+ * Theia renders a numbered circle (`.theia-badge-decorator-sidebar`) at the
+ * bottom-right of the icon. Our tighter icon rail + insets crop that badge.
+ * Product decision: any non-zero badge becomes a tiny blue top-right dot that
+ * fits inside the icon hitbox; the count itself is not shown.
+ */
+.lm-TabBar.theia-app-sides .theia-badge-decorator-sidebar {
+    top: 5px !important;
+    right: 5px !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: 7px !important;
+    height: 7px !important;
+    min-width: 7px !important;
+    min-height: 7px !important;
+    max-width: 7px !important;
+    max-height: 7px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    box-sizing: border-box !important;
+    background-color: var(--theia-activityBarBadge-background) !important;
+    /* Thin ring so the dot reads on selected/hover grey pills (match shell, not old rail fill) */
+    box-shadow: 0 0 0 1.5px var(--theia-titleBar-activeBackground, var(--theia-activityBar-background)) !important;
+    /* Hide the numeric text Theia still injects ("1", "99+", …) */
+    color: transparent !important;
+    font-size: 0 !important;
+    font-weight: 0 !important;
+    line-height: 0 !important;
+    overflow: hidden !important;
+    text-indent: -9999px !important;
+    white-space: nowrap !important;
+    pointer-events: none;
+}
+
+/* --- Left / right side panel: one continuous card (toolbar + dock) -----------
+ * DOM: #theia-*-content-panel > .lm-BoxPanel wraps .theia-sidepanel-toolbar + dock.
+ * Continuous border+radius+overflow on the BoxPanel avoids missing bottom edge and
+ * unrounded corners that split-styling toolbar/widget separately produced. */
+#theia-left-content-panel > .lm-BoxPanel,
+#theia-right-content-panel > .lm-BoxPanel {
+    border: 1px solid var(--theia-widget-border) !important;
+    border-radius: var(--connectome-card-radius) !important;
+    overflow: hidden !important;
+    background-color: var(--theia-sideBar-background) !important;
+    box-sizing: border-box !important;
+}
+
+#theia-left-content-panel > .lm-BoxPanel .theia-sidepanel-toolbar,
+#theia-right-content-panel > .lm-BoxPanel .theia-sidepanel-toolbar,
+#theia-left-content-panel > .lm-BoxPanel .theia-side-panel,
+#theia-right-content-panel > .lm-BoxPanel .theia-side-panel {
+    background-color: var(--theia-sideBar-background) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* --- Hide breadcrumbs ("address bar" under tabs) — product decision ------------
+ * Prefer preference default false (see frontend module); CSS is the hard guarantee
+ * so multirow min-height and the path row cannot reappear. */
+#theia-main-content-panel .theia-tabBar-breadcrumb-row,
+#theia-bottom-content-panel .theia-tabBar-breadcrumb-row {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
+}
+
+/* Collapse multirow height that reserved space for breadcrumbs */
+#theia-main-content-panel .lm-TabBar.theia-tabBar-multirow[data-orientation="horizontal"],
+#theia-bottom-content-panel .lm-TabBar.theia-tabBar-multirow[data-orientation="horizontal"] {
+    min-height: 0 !important;
+}
+
+/* --- Main editor area (fallback card model) ---------------------------------
+ * Split-card (tabBar top half + widget bottom half) never got reliable top
+ * radii/border under Lumino tab-bar geometry. Product decision:
+ *  - Tab strip is transparent (matches canvas) — no light-grey square slab
+ *  - Full rounded border wraps the editor/content widget only (all 4 corners)
+ *  - Tabs float as nested pills on the canvas above that card
+ */
+#theia-main-content-panel > .lm-DockPanel-tabBar,
+#theia-main-content-panel .lm-TabBar.theia-app-centers,
+#theia-main-content-panel .lm-TabBar.theia-app-main {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    clip-path: none !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+}
+
+/* No pseudo frame on the tab strip */
+#theia-main-content-panel > .lm-DockPanel-tabBar::before,
+#theia-main-content-panel > .lm-DockPanel-tabBar::after,
+#theia-main-content-panel .lm-TabBar.theia-app-centers::after {
+    content: none !important;
+    display: none !important;
+    border: none !important;
+    background: none !important;
+    height: 0 !important;
+}
+
+#theia-main-content-panel > .lm-DockPanel-tabBar .theia-tabBar-tab-row,
+#theia-main-content-panel > .lm-DockPanel-tabBar .theia-tabBar-toolbar,
+#theia-main-content-panel > .lm-DockPanel-tabBar .lm-TabBar-content-container {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Editor/content: full card — border + radius on all four corners.
+ * No clip-path: it can double-paint with border as an extra edge line. */
+#theia-main-content-panel > .lm-DockPanel-widget,
+#theia-main-content-panel .lm-Widget.lm-DockPanel-widget {
+    border: 1px solid var(--theia-widget-border) !important;
+    border-radius: var(--connectome-card-radius) !important;
+    background-color: var(--theia-editor-background) !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    clip-path: none !important;
+}
+
+#theia-main-content-panel .lm-DockPanel-handle[data-orientation="vertical"] + .lm-TabBar {
+    border-top: none !important;
+}
+
+/* Monaco + preview webview paint layers: match full card radii */
+#theia-main-content-panel > .lm-DockPanel-widget .monaco-editor,
+#theia-main-content-panel > .lm-DockPanel-widget .monaco-editor .overflow-guard,
+#theia-main-content-panel > .lm-DockPanel-widget .monaco-editor .monaco-scrollable-element,
+#theia-main-content-panel > .lm-DockPanel-widget .monaco-editor .margin,
+#theia-main-content-panel > .lm-DockPanel-widget iframe,
+#theia-main-content-panel > .lm-DockPanel-widget webview {
+    border-radius: calc(var(--connectome-card-radius) - 1px) !important;
+}
+
+/*
+ * Top breathing room under the card border is applied via Monaco's layout-aware
+ * `padding: { top }` option (ConnectomeEditorPaddingContribution) — NOT by
+ * shifting `.overflow-guard` with CSS. CSS `top` on overflow-guard desyncs
+ * painted text from mouse hit-testing (viewDomNode is the outer .monaco-editor),
+ * which breaks line selection, wrapped lines, and end-of-block clicks.
+ */
+#theia-main-content-panel > .lm-DockPanel-widget .monaco-editor {
+    background-color: var(--theia-editor-background) !important;
+}
+
+#theia-main-content-panel > .lm-DockPanel-widget .theia-editor,
+#theia-main-content-panel > .lm-DockPanel-widget .monaco-editor-container {
+    background-color: var(--theia-editor-background) !important;
+}
+
+/* Ensure no residual outline on the main column next to the right side area */
+#theia-main-content-panel,
+#theia-bottom-split-panel,
+#theia-left-right-split-panel {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Outer window inset was tried and rejected (looked too wide on the left,
+ * right rail ended up flush/wrong). Keep rails at the window edge; tighten
+ * rail↔card spacing in ConnectomeSidePanelHandler instead. */
+
+/* Theia tabs.css draws a left border on horizontal dock handles (editor group) */
+#theia-main-content-panel .lm-DockPanel-handle[data-orientation="horizontal"] {
+    border-left: none !important;
+    border-right: none !important;
+}
+
+/* --- Nested tab cards (pills floating on canvas above the editor card) ----- */
+#theia-main-content-panel .lm-TabBar[data-orientation="horizontal"] .theia-tabBar-tab-row {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 28px;
+    /* Top-align so pills line up with the Explorer card's top border */
+    align-items: flex-start !important;
+    /* Top 0 + left 0: flush with explorer top and editor left border */
+    padding: 0 4px 6px 0 !important;
+    box-sizing: border-box;
+    background: transparent !important;
+}
+
+#theia-main-content-panel .lm-TabBar[data-orientation="horizontal"] .lm-TabBar-content {
+    gap: 6px;
+    align-items: center;
+    min-height: 28px;
+    /* Ensure the tab list itself doesn't inset from the row */
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-left: 0 !important;
+}
+
+/* Kill residual top offset on the main dock tab bars */
+#theia-main-content-panel > .lm-DockPanel-tabBar,
+#theia-main-content-panel .lm-TabBar.theia-app-centers,
+#theia-main-content-panel .lm-TabBar.theia-app-main {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+#theia-main-content-panel .lm-TabBar .lm-TabBar-tab {
+    border: 1px solid var(--theia-widget-border) !important;
+    border-radius: var(--connectome-tab-radius) !important;
+    border-right: 1px solid var(--theia-widget-border) !important; /* override strip separator */
+    background: color-mix(in srgb, var(--theia-tab-inactiveBackground, var(--theia-editor-background)) 88%, var(--theia-sideBar-background)) !important;
+    color: var(--theia-tab-inactiveForeground, var(--theia-descriptionForeground)) !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    line-height: 26px !important;
+    margin: 0 !important;
+    padding: 0 8px !important;
+    box-sizing: border-box !important;
+}
+
+#theia-main-content-panel .lm-TabBar .lm-TabBar-tab:hover {
+    background: var(--theia-list-hoverBackground, var(--theia-sideBar-background)) !important;
+    color: var(--theia-tab-activeForeground, var(--theia-foreground)) !important;
+}
+
+#theia-main-content-panel .lm-TabBar .lm-TabBar-tab.lm-mod-current {
+    background: var(--theia-editor-background) !important;
+    color: var(--theia-tab-activeForeground, var(--theia-foreground)) !important;
+    border-color: color-mix(in srgb, var(--theia-focusBorder) 55%, var(--theia-widget-border)) !important;
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--theia-focusBorder) 25%, transparent);
+}
+
+#theia-main-content-panel .lm-TabBar:not(.theia-tabBar-active) .lm-TabBar-tab.lm-mod-current {
+    border-color: var(--theia-widget-border) !important;
+    box-shadow: none;
+}
+
+/* Drag image should still look like a card */
+#theia-main-content-panel .lm-TabBar-tab.lm-mod-drag-image {
+    border-radius: var(--connectome-tab-radius) !important;
+    border: 1px solid var(--theia-widget-border) !important;
+}
+
+/* --- Bottom panel: same fallback model (tabs on canvas, card on content) --- */
+#theia-bottom-content-panel > .lm-DockPanel-tabBar,
+#theia-bottom-content-panel .lm-TabBar.theia-app-centers {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    clip-path: none !important;
+}
+
+#theia-bottom-content-panel > .lm-DockPanel-tabBar::before,
+#theia-bottom-content-panel > .lm-DockPanel-tabBar::after,
+#theia-bottom-content-panel .lm-TabBar.theia-app-centers::after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+}
+
+#theia-bottom-content-panel > .lm-DockPanel-widget {
+    border: 1px solid var(--theia-widget-border) !important;
+    border-radius: var(--connectome-card-radius) !important;
+    background-color: var(--theia-panel-background, var(--theia-sideBar-background)) !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    clip-path: none !important;
+}
+
+#theia-bottom-content-panel .lm-DockPanel-handle {
+    border: none !important;
+    background: transparent !important;
+}
+
+/* Forced-colors accessibility */
+@media (forced-colors: active) {
+    #theia-left-content-panel > .lm-BoxPanel,
+    #theia-right-content-panel > .lm-BoxPanel,
+    #theia-main-content-panel > .lm-DockPanel-widget,
+    #theia-bottom-content-panel > .lm-DockPanel-widget,
+    #theia-main-content-panel .lm-TabBar .lm-TabBar-tab {
+        border-color: CanvasText !important;
+    }
+}
+
+.connectome-icon {
+    background-image: url("../icons/512-512.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/*
+ * Menubar application logo (left of File).
+ * BrowserMenuBarContribution / ElectronMenuContribution create a top-panel widget
+ * with id "theia:icon" and class "theia-icon". Core only sizes it; products must
+ * supply the image. Fill the blank square left of the File menu.
+ */
+#theia\:icon.theia-icon,
+.theia-icon {
+    background-image: url("../icons/512-512.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    margin: 5px 10px 5px 10px !important;
+    flex: 0 0 auto !important;
+    align-self: center !important;
+}
+
+.connectome-welcome {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    overflow-x: hidden;
+    color: var(--theia-foreground);
+    background:
+        radial-gradient(circle at 12% 5%, color-mix(in srgb, var(--theia-focusBorder) 12%, transparent), transparent 32rem),
+        var(--theia-editor-background);
+}
+
+.connectome-welcome *,
+.connectome-welcome *::before,
+.connectome-welcome *::after {
+    box-sizing: border-box;
+}
+
+.connectome-welcome__content {
+    width: min(100%, 1040px);
+    margin: 0 auto;
+    padding: 48px 40px 28px;
+}
+
+.connectome-welcome__hero {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.connectome-welcome__logo {
+    flex: 0 0 76px;
+    width: 76px;
+    height: 76px;
+    background-image: url("../icons/512-512.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    filter: drop-shadow(0 8px 18px color-mix(in srgb, var(--theia-editor-foreground) 18%, transparent));
+}
+
+.connectome-welcome__hero h1 {
+    margin: 0 0 6px;
+    font-size: 32px;
+    line-height: 1.15;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+}
+
+.connectome-welcome__hero p {
+    margin: 0;
+    color: var(--theia-descriptionForeground);
+    font-size: var(--theia-ui-font-size2);
+}
+
+.connectome-welcome__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.9fr);
+    gap: 20px;
+    align-items: start;
+}
+
+.connectome-welcome__column {
+    display: grid;
+    gap: 20px;
+    min-width: 0;
+}
+
+.connectome-welcome__card {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--theia-widget-border);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--theia-sideBar-background) 78%, transparent);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--theia-editor-foreground) 7%, transparent);
+}
+
+.connectome-welcome__card h2 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 12px;
+    font-size: var(--theia-ui-font-size2);
+    line-height: 1.3;
+    font-weight: 650;
+}
+
+.connectome-welcome__card h2 i {
+    color: var(--theia-focusBorder);
+}
+
+.connectome-welcome__card-content {
+    display: grid;
+    gap: 4px;
+}
+
+.connectome-welcome__action,
+.connectome-welcome__tip {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    min-width: 0;
+    padding: 9px 10px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--theia-foreground);
+    text-decoration: none;
+}
+
+.connectome-welcome__action {
+    cursor: pointer;
+}
+
+.connectome-welcome__action:hover {
+    color: var(--theia-foreground);
+    text-decoration: none;
+    background: var(--theia-list-hoverBackground);
+}
+
+.connectome-welcome__action:focus-visible {
+    color: var(--theia-foreground);
+    text-decoration: none;
+    outline: 1px solid var(--theia-focusBorder);
+    outline-offset: 1px;
+    background: var(--theia-list-focusBackground);
+}
+
+.connectome-welcome__action > i,
+.connectome-welcome__tip > i {
+    margin-top: 2px;
+    color: var(--theia-descriptionForeground);
+    font-size: 16px;
+}
+
+.connectome-welcome__action span,
+.connectome-welcome__tip span {
+    display: grid;
+    min-width: 0;
+    gap: 2px;
+}
+
+.connectome-welcome__action strong,
+.connectome-welcome__tip strong {
+    overflow: hidden;
+    font-weight: 550;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.connectome-welcome__action small,
+.connectome-welcome__tip small {
+    overflow: hidden;
+    color: var(--theia-descriptionForeground);
+    font-size: var(--theia-ui-font-size0);
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.connectome-welcome__tip {
+    color: var(--theia-descriptionForeground);
+}
+
+.connectome-welcome__empty {
+    margin: 4px 10px 6px;
+    color: var(--theia-descriptionForeground);
+    line-height: 1.5;
+}
+
+.connectome-welcome__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: min(100%, 1040px);
+    margin: auto auto 0;
+    padding: 20px 40px;
+    color: var(--theia-descriptionForeground);
+    font-size: var(--theia-ui-font-size1);
+}
+
+.connectome-welcome__footer p,
+.connectome-welcome__footer .gs-preference {
+    margin: 0;
+}
+
+.connectome-welcome__preference .gs-preference {
+    display: flex;
+    align-items: center;
+}
+
+.connectome-welcome__preference input:focus-visible {
+    outline: 1px solid var(--theia-focusBorder);
+    outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+    .connectome-welcome__content {
+        padding: 30px 20px 20px;
+    }
+
+    .connectome-welcome__hero {
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .connectome-welcome__logo {
+        flex-basis: 58px;
+        width: 58px;
+        height: 58px;
+    }
+
+    .connectome-welcome__hero h1 {
+        font-size: 27px;
+    }
+
+    .connectome-welcome__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .connectome-welcome__footer {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 18px 20px;
+    }
+}
+
+@media (forced-colors: active) {
+    .connectome-welcome__card,
+    .connectome-welcome__action:focus-visible {
+        border-color: CanvasText;
+    }
+
+    .connectome-welcome__logo {
+        filter: none;
+    }
+}
+
+.ad-logo {
+    background-image: var(--connectome-branding-logo);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 250px;
+    height: 118px;
+    padding: 20px;
+}
+
+.ad-float {
+    float: right;
+}
+
+.ad-container {
+    padding: 20px;
+    width: 1150px;
+    height: 700;
+}
+
+/*
+ * Memory Inspector activity-rail icon (fallback CSS)
+ *
+ * Primary fix: MemoryInspectorIconContribution swaps title.iconClass to
+ * `codicon codicon-chip`. This CSS is a belt-and-suspenders fallback if the
+ * upstream `memory-view-icon` class is still present (e.g. race before the
+ * contribution runs): kill the broken SVG mask and paint a chip glyph via
+ * the codicon font, same pattern as every other side-rail icon.
+ *
+ * AI Chat / Codex / Graph icons are set in TS (copilot, openai, graph-scatter).
+ * Claude uses custom codicon glyph `claude` (see connectome-codicons.css).
+ */
+.lm-TabBar.theia-app-sides .lm-TabBar-tabIcon.memory-view-icon {
+    background: none !important;
+    background-color: transparent !important;
+    -webkit-mask: none !important;
+    mask: none !important;
+    font-family: codicon !important;
+    font-size: var(--theia-private-sidebar-icon-size, 24px) !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    color: inherit !important;
+}
+
+.lm-TabBar.theia-app-sides .lm-TabBar-tabIcon.memory-view-icon::before {
+    content: "\ec19"; /* codicon-chip */
+    font-family: codicon;
+    font-size: inherit;
+    color: inherit;
+}
+
+ul.connectome-aboutExtensions {
+    height: 450px;
+    overflow: hidden;
+    overflow-y: scroll;
+    list-style-type: none;
+    padding: 0;
+    margin-left: 10px;
+}

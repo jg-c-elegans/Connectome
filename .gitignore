@@ -1,0 +1,33 @@
+**/node_modules
+**/.browser_modules
+**/dist
+/artifacts/
+**/lib
+**/src-gen
+**/gen-esbuild.*.mjs
+!/plugins/
+/plugins/*
+!/plugins/cherry-markdown/
+**/tsconfig.tsbuildinfo
+*.log
+**/test-screenshots
+
+# AI tools
+.agents/
+.agents_workspace/
+.claude/
+.codex/
+AGENTS.md
+
+# IDE
+.air/
+.idea/
+.vs/
+.vscode/
+
+# Personal
+.workspace/
+
+# Secrets
+.env
+.env.*

@@ -1,0 +1,16 @@
+{
+    "extends": "../../configs/base.tsconfig",
+    "include": [],
+    "compilerOptions": {
+      "composite": true,
+      "esModuleInterop": true
+    },
+    "references": [
+      {
+        "path": "../../connectome-extensions/notes"
+      },
+      {
+        "path": "../../connectome-extensions/product"
+      }
+    ]
+}

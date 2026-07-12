@@ -1,0 +1,2 @@
+import { ContainerModule } from '@theia/core/shared/inversify'; import { ElectronMainApplicationContribution } from '@theia/core/lib/electron-main/electron-main-application'; import { SystemElectronMain } from './system-electron-main';
+export default new ContainerModule(bind => { bind(SystemElectronMain).toSelf().inSingletonScope(); bind(ElectronMainApplicationContribution).toService(SystemElectronMain); });

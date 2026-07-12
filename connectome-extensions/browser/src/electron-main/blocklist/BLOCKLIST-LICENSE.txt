@@ -1,0 +1,28 @@
+Connectome ad/tracker hostname blocklist
+=========================================
+
+ad-tracker-blocklist.json is a hand-curated, static list of well-known
+advertising, tracking, and analytics hostnames, compiled from general
+public knowledge of widely-recognized ad-tech/adtech, analytics, and
+tracking vendors as of 2026.
+
+This is NOT a live-updating feed and is NOT derived from, or a copy of,
+any single third-party hosts-file project (e.g. StevenBlack/hosts). It
+is intentionally a small, conservative list (a few hundred entries)
+covering major ad networks, real-time-bidding/exchange platforms,
+analytics/telemetry vendors, and tag managers, intended to reduce
+common ad/tracker network requests inside Connectome's embedded browser
+without attempting to be a comprehensive or continuously maintained
+filter list.
+
+Entries are plain hostnames (or, in a few cases, host+path fragments
+that are matched as a hostname suffix for convenience). Matching in
+code is a simple exact-match or suffix-match ("endsWith('.' + domain)")
+against the request URL's hostname - there is no cosmetic filtering,
+no wildcard/regex syntax, and no allowlist exceptions.
+
+Maintenance: this list is not automatically refreshed. If broader or
+more current coverage is desired, consider replacing it wholesale with
+a snapshot of a maintained upstream list (e.g. StevenBlack/hosts,
+https://github.com/StevenBlack/hosts) and updating this file
+accordingly, including that project's license terms.

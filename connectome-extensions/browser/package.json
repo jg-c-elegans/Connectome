@@ -1,0 +1,43 @@
+{
+  "private": true,
+  "name": "connectome-browser-ext",
+  "version": "1.2.2",
+  "description": "Connectome integrated research browser",
+  "author": "James Grimm <contact@jgrimm.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jg-c-elegans/connectome.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jg-c-elegans/connectome/issues"
+  },
+  "homepage": "https://github.com/jg-c-elegans/connectome#readme",
+  "dependencies": {
+    "@theia/core": "1.73.1",
+    "@theia/editor": "1.73.1",
+    "@theia/filesystem": "1.73.1",
+    "@theia/monaco-editor-core": "1.108.201",
+    "@theia/workspace": "1.73.1",
+    "connectome-notes-ext": "^1.2.2",
+    "inversify": "^6.2.2"
+  },
+  "devDependencies": {
+    "rimraf": "^2.7.1",
+    "typescript": "^4.9.5"
+  },
+  "theiaExtensions": [
+    {
+      "frontend": "lib/browser/browser-frontend-module"
+    },
+    {
+      "preload": "lib/electron-browser/preload",
+      "electronMain": "lib/electron-main/electron-main-module"
+    }
+  ],
+  "scripts": {
+    "clean": "rimraf lib *.tsbuildinfo",
+    "build": "tsc -b",
+    "lint": "eslint --ext ts,tsx src"
+  }
+}

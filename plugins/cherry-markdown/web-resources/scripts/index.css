@@ -1,0 +1,175 @@
+/* Connectome Dark theme overrides for Cherry Markdown */
+
+/* Container overrides */
+.cherry,
+.cherry-editor,
+.cherry-editor-wrap,
+.cherry-previewer,
+.cherry-markdown {
+  background-color: #050916 !important;
+  color: #F2F3F5 !important;
+  height: 100% !important;
+  border: none !important;
+}
+
+.cherry {
+  --base-editor-bg: #050916;
+  --base-font-color: #F2F3F5;
+  --editor-header-color: #A667F4;
+  --editor-string-color: #FAC93C;
+  --editor-comment-color: #3B3F89;
+  --editor-quote-color: #3B3F89;
+  --editor-link-color: #5A36FA;
+  --editor-url-color: #5A36FA;
+  --editor-active-line-bg: #191D29;
+  --editor-selection-bg: #5A36FA66;
+}
+
+/* Cherry's editOnly mode is a contenteditable rendered document, not CodeMirror. */
+.cherry .cherry-markdown {
+  caret-color: #5A36FA !important;
+}
+
+.cherry .cherry-markdown,
+.cherry .cherry-markdown p,
+.cherry .cherry-markdown li {
+  color: #F2F3F5 !important;
+}
+
+.cherry .cherry-markdown h1,
+.cherry .cherry-markdown h2,
+.cherry .cherry-markdown h3,
+.cherry .cherry-markdown h4,
+.cherry .cherry-markdown h5,
+.cherry .cherry-markdown h6 { color: #A667F4 !important; }
+.cherry .cherry-markdown h1::before,
+.cherry .cherry-markdown h2::before,
+.cherry .cherry-markdown h3::before,
+.cherry .cherry-markdown h4::before,
+.cherry .cherry-markdown h5::before,
+.cherry .cherry-markdown h6::before { color: #019BFD !important; }
+.cherry .cherry-markdown strong { color: #FAC93C !important; }
+.cherry .cherry-markdown em { color: #01C6FD !important; }
+.cherry .cherry-markdown a { color: #5A36FA !important; text-decoration: underline; }
+.cherry .cherry-markdown code { color: #019BFD !important; background: #191D29 !important; }
+.cherry .cherry-markdown blockquote { color: #3B3F89 !important; border-left-color: #3B3F89 !important; }
+.cherry .cherry-markdown hr { border-color: #3B3F89 !important; }
+.cherry .cherry-markdown mark { color: #050916 !important; background: #FAC93C !important; }
+.cherry .cherry-markdown table th { background: #191D29 !important; color: #A667F4 !important; }
+.cherry .cherry-markdown table td,
+.cherry .cherry-markdown table th { border-color: #3B3F89 !important; }
+
+::highlight(connectome-frontmatter-key),
+::highlight(connectome-frontmatter-delimiter) { color: #019BFD; }
+::highlight(connectome-frontmatter-value) { color: #FAC93C; }
+::highlight(connectome-markdown-bracket) { color: #019BFD; }
+::highlight(connectome-markdown-link-text) { color: #5A36FA; text-decoration: underline; }
+::highlight(connectome-markdown-link-target) { color: #FAC93C; }
+::highlight(connectome-markdown-marker) { color: #A667F4; }
+::highlight(connectome-markdown-emphasis) { color: #FAC93C; }
+
+/* Hide preview panel completely */
+.cherry-previewer {
+  display: none !important;
+}
+
+/* Set editor wrapper to full width since preview is hidden */
+.cherry-editor {
+  width: 100% !important;
+  flex: 1 1 auto !important;
+}
+
+/* Toolbar overrides */
+.cherry .cherry-toolbar {
+  background-color: #191D29 !important;
+  border-bottom: 1px solid #3B3F89 !important;
+}
+
+.cherry .cherry-toolbar .cherry-toolbar-button {
+  color: #F2F3F5 !important;
+}
+
+.cherry .cherry-toolbar .cherry-toolbar-button:hover {
+  background-color: #252850 !important;
+  color: #A667F4 !important;
+}
+
+.cherry .cherry-toolbar .cherry-toolbar-button.active,
+.cherry .cherry-toolbar .cherry-toolbar-button.active:hover {
+  color: #A667F4 !important;
+  background-color: #252850 !important;
+}
+
+/* Cherry 0.11 uses CodeMirror 6. Keep every layer opaque so resizing the
+   editor cannot expose Cherry's default white canvas. */
+.cherry .cherry-editor .cm-editor,
+.cherry .cherry-editor .cm-scroller,
+.cherry .cherry-editor .cm-content,
+.cherry .cherry-editor .cm-gutters {
+  background-color: #050916 !important;
+  color: #F2F3F5 !important;
+}
+
+.cherry .cherry-editor .cm-gutters {
+  background-color: #050916 !important;
+  border-right: 1px solid #3B3F89 !important;
+}
+
+.cherry .cherry-editor .cm-lineNumbers .cm-gutterElement {
+  color: #3B3F89 !important;
+}
+
+.cherry .cherry-editor .cm-selectionBackground,
+.cherry .cherry-editor.cm-focused .cm-selectionBackground {
+  background-color: #5A36FA66 !important;
+}
+
+.cherry .cherry-editor .cm-cursor {
+  border-left: 2px solid #5A36FA !important;
+}
+
+/* Syntax Highlighting */
+.cherry .cherry-editor .cm-header { color: #A667F4 !important; font-weight: bold; }
+.cherry .cherry-editor .cm-strong { color: #FAC93C !important; font-weight: bold; }
+.cherry .cherry-editor .cm-em { color: #01C6FD !important; font-style: italic; }
+.cherry .cherry-editor .cm-string,
+.cherry .cherry-editor .cm-string-2 { color: #FAC93C !important; }
+.cherry .cherry-editor .cm-comment { color: #3B3F89 !important; font-style: italic; }
+.cherry .cherry-editor .cm-link { color: #5A36FA !important; text-decoration: underline; }
+.cherry .cherry-editor .cm-url { color: #5A36FA !important; }
+.cherry .cherry-editor .cm-variable { color: #F2F3F5 !important; }
+.cherry .cherry-editor .cm-keyword { color: #5A36FA !important; }
+.cherry .cherry-editor .cm-number { color: #FAC93C !important; }
+
+/* Metadata (YAML Frontmatter) Styling */
+.cherry .cherry-editor .cm-line.cm-frontmatter,
+.cherry .cherry-editor .cm-line.cm-frontmatter > span,
+.cherry .cherry-editor .cm-line.cm-frontmatter .cm-meta,
+.cherry .cherry-editor .cm-line.cm-frontmatter .cm-atom {
+  color: #019BFD !important; /* blue for keys (title, aliases, tags) and delimiters (---) */
+}
+
+/* Make sure metadata values are colored yellow */
+.cherry .cherry-editor .cm-line.cm-frontmatter .cm-string,
+.cherry .cherry-editor .cm-line.cm-frontmatter .cm-string-2,
+.cherry .cherry-editor .cm-line.cm-frontmatter .cm-number,
+.cherry .cherry-editor .cm-line.cm-frontmatter .cm-variable-2,
+.cherry .cherry-editor .cm-line.cm-frontmatter .cm-variable-3 {
+  color: #FAC93C !important; /* yellow for values (Glossary, list items, etc.) */
+}
+
+/* Dialogs & Popups */
+.cherry-dropdown {
+  background-color: #191D29 !important;
+  border: 1px solid #3B3F89 !important;
+  color: #F2F3F5 !important;
+}
+
+.cherry-dropdown-item {
+  color: #F2F3F5 !important;
+}
+
+.cherry-dropdown-item:hover {
+  background-color: #252850 !important;
+  color: #A667F4 !important;
+}

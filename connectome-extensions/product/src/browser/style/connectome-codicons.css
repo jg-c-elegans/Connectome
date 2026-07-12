@@ -1,0 +1,30 @@
+/*---------------------------------------------------------------------------------------------
+ * Connectome custom codicons - extend the stock @vscode/codicons font.
+ *
+ * Stock Theia loads font-family "codicon" from @vscode/codicons.
+ * We register a second @font-face for the same family name, limited via
+ * unicode-range to our Private Use Area (U+F000-F0FF). Browsers use our
+ * TTF for those codepoints and the stock font for everything else, so
+ * activity-rail icons keep working with the usual:
+ *   title.iconClass = codicon('claude')  // -> "codicon codicon-claude"
+ *
+ * Regenerate with: yarn build:codicons
+ * Source SVGs: connectome-extensions/product/src/browser/icons/codicons-src/
+ *--------------------------------------------------------------------------------------------*/
+
+@font-face {
+    font-family: "codicon";
+    font-display: block;
+    src: url("../icons/connectome-codicon.ttf") format("truetype");
+    unicode-range: U+F000-F0FF;
+}
+
+/*---------------------
+ * Connectome glyphs
+ *-------------------*/
+
+.codicon-claude:before,
+.codicon-anthropic:before { content: "\f000" }
+
+.codicon-antigravity:before,
+.codicon-agy:before { content: "\f001" }

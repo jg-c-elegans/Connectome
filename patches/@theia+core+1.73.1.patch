@@ -1,0 +1,21 @@
+diff --git a/node_modules/@theia/core/lib/electron-main/electron-main-application.js b/node_modules/@theia/core/lib/electron-main/electron-main-application.js
+index 3943aaf..230edc4 100644
+--- a/node_modules/@theia/core/lib/electron-main/electron-main-application.js
++++ b/node_modules/@theia/core/lib/electron-main/electron-main-application.js
+@@ -700,6 +700,16 @@ let ElectronMainApplication = class ElectronMainApplication {
+         }
+     }
+     onWebContentsCreated(event, webContents) {
++        // Do not lock down navigation for guest <webview> content (e.g. the connectome-browser
++        // extension's embedded browser tabs). That content is expected to navigate freely as the
++        // user browses, and is independently sandboxed/allow-listed by partition in
++        // BrowserElectronMain (will-attach-webview, setWindowOpenHandler, webRequest filtering).
++        // Without this, only a webview's very first navigation succeeds (Electron does not fire
++        // will-navigate for a frame's initial load) while every subsequent navigation - clicking a
++        // link or submitting the address bar on an already-loaded tab - gets silently cancelled below.
++        if (webContents.getType() === 'webview') {
++            return;
++        }
+         // Block any in-page navigation except loading the secondary window contents
+         webContents.on('will-navigate', evt => {
+             if (new uri_1.default(evt.url).path.fsPath() !== new common_1.Path(this.globals.THEIA_SECONDARY_WINDOW_HTML_PATH).fsPath()) {

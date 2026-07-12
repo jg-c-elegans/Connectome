@@ -1,0 +1,210 @@
+.connectome-dashboard-window__root {
+    height: 100%;
+    overflow: auto;
+    padding: 24px 32px;
+    box-sizing: border-box;
+    /* Defensive: keeps this window readable even if a global stylesheet (e.g. Mantine's base
+       reset) shifts the document's default inherited text color. */
+    color: var(--theia-foreground);
+}
+
+.connectome-dashboard-window__hero {
+    margin-bottom: 20px;
+}
+
+.connectome-dashboard-window__hero h1 {
+    margin: 0 0 4px 0;
+    font-size: 22px;
+}
+
+.connectome-dashboard-window__hero p {
+    margin: 0;
+    opacity: 0.7;
+}
+
+.connectome-dashboard-window__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.connectome-dashboard-window__footer-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.connectome-dashboard-window__column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.connectome-dashboard-window__card {
+    border: 1px solid var(--theia-editorWidget-border, rgba(128, 128, 128, 0.25));
+    border-radius: 8px;
+    padding: 14px;
+}
+
+.connectome-dashboard-window__card-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.connectome-dashboard-window__action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    cursor: pointer;
+}
+
+.connectome-dashboard-window__action:hover {
+    opacity: 0.8;
+}
+
+.connectome-dashboard-window__git-summary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.connectome-dashboard-window__info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.connectome-dashboard-window__info-grid .connectome-notes-group-detail {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.connectome-dashboard-window__today-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.connectome-dashboard-window__mini-calendar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* Mantine 7 uses hashed CSS-module class names (no stable `.mantine-Calendar-*` selectors
+       to hook), so centering/sizing is done at this wrapper level instead of reaching into its
+       internal markup. */
+    padding: 4px 0 8px;
+}
+
+.connectome-dashboard-window__dials {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.connectome-dashboard-window__dial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 11px;
+    gap: 4px;
+}
+
+.connectome-dashboard-window__dial-track {
+    fill: none;
+    stroke: rgba(128, 128, 128, 0.25);
+    stroke-width: 4;
+}
+
+.connectome-dashboard-window__dial-value {
+    fill: none;
+    stroke: var(--theia-progressBar-background, #3794ff);
+    stroke-width: 4;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    transition: stroke-dashoffset 0.3s ease;
+}
+
+.connectome-dashboard-window__dial-text {
+    font-size: 11px;
+    fill: var(--theia-foreground);
+}
+
+.connectome-dashboard-window__app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    gap: 10px;
+}
+
+.connectome-dashboard-window__app-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 10px;
+    text-align: center;
+}
+
+.connectome-dashboard-window__app-tile:hover {
+    background: var(--theia-list-hoverBackground);
+}
+
+.connectome-dashboard-window__app-tile img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.connectome-dashboard-window__app-icon {
+    font-size: 28px;
+    opacity: 0.6;
+}
+
+.connectome-dashboard-window__app-label {
+    max-width: 64px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.connectome-dashboard-window__app-remove {
+    position: absolute;
+    top: -2px;
+    right: 2px;
+    opacity: 0;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.connectome-dashboard-window__app-tile:hover .connectome-dashboard-window__app-remove {
+    opacity: 0.7;
+}
+
+.connectome-dashboard-window__app-tile--add {
+    justify-content: center;
+    border: 1px dashed rgba(128, 128, 128, 0.4);
+}
+
+@media (max-width: 900px) {
+    .connectome-dashboard-window__grid,
+    .connectome-dashboard-window__footer-row {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,2 @@
+import { ContainerModule } from '@theia/core/shared/inversify'; import { ElectronMainApplicationContribution } from '@theia/core/lib/electron-main/electron-main-application'; import { BrowserElectronMain } from './browser-electron-main';
+export default new ContainerModule(bind => { bind(BrowserElectronMain).toSelf().inSingletonScope(); bind(ElectronMainApplicationContribution).toService(BrowserElectronMain); });

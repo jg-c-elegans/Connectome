@@ -1,0 +1,43 @@
+.connectome-format-toolbar {
+    position: absolute;
+    z-index: 40;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 6px;
+    background-color: var(--theia-editorWidget-background);
+    border: 1px solid var(--theia-widget-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.connectome-format-toolbar-btn {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 6px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--theia-foreground);
+    font-size: 12px;
+    font-family: var(--theia-ui-font-family);
+    cursor: pointer;
+}
+
+.connectome-format-toolbar-btn:hover {
+    background-color: var(--theia-toolbar-hoverBackground, var(--theia-list-hoverBackground));
+}
+
+.connectome-format-toolbar-btn:active {
+    background-color: var(--theia-focusBorder);
+    color: var(--theia-editor-background);
+}
+
+.connectome-format-toolbar-heading {
+    height: 24px;
+    margin-left: 2px;
+    border: 1px solid var(--theia-widget-border);
+    border-radius: 4px;
+    background-color: var(--theia-dropdown-background, var(--theia-editorWidget-background));
+    color: var(--theia-foreground);
+    font-size: 11px;
+}

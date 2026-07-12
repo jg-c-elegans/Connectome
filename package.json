@@ -1,0 +1,71 @@
+{
+  "private": true,
+  "version": "1.2.2",
+  "license": "MIT",
+  "author": "James Grimm <contact@jgrimm.dev>",
+  "engines": {
+    "yarn": ">=1.7.0 <2",
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@types/yargs": "^17",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-deprecation": "1.2.1",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-no-null": "^1.0.2",
+    "eslint-plugin-no-unsanitized": "^3.2.0",
+    "eslint-plugin-react": "^7.37.5",
+    "lerna": "^9.0.7",
+    "node-gyp": "^11.5.0",
+    "rimraf": "^2.7.1",
+    "svg2ttf": "^6.0.3",
+    "svgicons2svgfont": "^12.0.0",
+    "ts-node": "^10.9.2",
+    "type-fest": "^0.20.2",
+    "yargs": "^17.7.2"
+  },
+  "scripts": {
+    "clean": "lerna run clean && rimraf node_modules",
+    "build": "yarn build:extensions && yarn desktop:build",
+    "build:dev": "yarn build:extensions && yarn desktop:build:dev",
+    "build:extensions": "lerna run --scope=\"connectome*ext\" build && yarn --cwd plugins/cherry-markdown build",
+    "build:codicons": "node scripts/build-connectome-codicons.js",
+    "build:local-theia": "node scripts/build-with-local-theia.js",
+    "download:plugins": "yarn permissions:writeable",
+    "desktop:start": "yarn --cwd applications/desktop start",
+    "desktop:build": "yarn --cwd applications/desktop build:prod",
+    "desktop:build:dev": "yarn --cwd applications/desktop build",
+    "desktop:package": "yarn build:extensions && yarn --cwd applications/desktop package",
+    "desktop:package:preview": "yarn build:extensions && yarn --cwd applications/desktop package:preview",
+    "desktop:package:msix": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package-msix.ps1",
+    "desktop:test": "yarn --cwd applications/desktop test",
+    "permissions:writeable": "ts-node scripts/make-files-writeable.ts plugins",
+    "watch": "lerna run --parallel watch",
+    "test": "lerna run test",
+    "lint": "eslint --ext js,jsx,ts,tsx scripts && lerna run lint",
+    "lint:fix": "eslint --ext js,jsx,ts,tsx scripts --fix && lerna run lint:fix",
+    "postinstall": "npx patch-package --patch-dir patches"
+  },
+  "workspaces": [
+    "applications/*",
+    "connectome-extensions/*"
+  ],
+  "resolutions": {
+    "@types/node": "^22.10.2",
+    "@types/d3-dispatch": "3.0.6",
+    "@types/puppeteer": "^5.4.7",
+    "@yarnpkg/parsers": "3.0.0-rc.44",
+    "**/multer": "1.4.4-lts.1",
+    "**/nan": "2.25.0",
+    "**/cpu-features": "0.0.9",
+    "**/perfect-scrollbar": "1.5.5",
+    "**/node-abi": "4.14.0",
+    "**/yauzl": "^3.3.1"
+  },
+  "dependencies": {
+    "@vscode/windows-ca-certs": "^0.3.4"
+  }
+}

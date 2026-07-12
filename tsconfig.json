@@ -1,0 +1,22 @@
+{
+  "extends": "./configs/base.tsconfig.json",
+  "include": [],
+  "compilerOptions": {
+    "composite": true,
+    "allowJs": true
+  },
+  "references": [
+    {
+      "path": "connectome-extensions/browser"
+    },
+    {
+      "path": "connectome-extensions/notes"
+    },
+    {
+      "path": "connectome-extensions/product"
+    },
+    {
+      "path": "applications/desktop"
+    }
+  ]
+}

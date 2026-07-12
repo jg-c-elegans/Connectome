@@ -1,0 +1,43 @@
+{
+  "name": "cherry-markdown",
+  "displayName": "Cherry Markdown",
+  "description": "Custom markdown editor using Cherry Markdown core, styled to match the Connectome Dark theme.",
+  "version": "1.0.0",
+  "publisher": "cherrymarkdownpublisher",
+  "license": "Apache-2.0",
+  "engines": {
+    "vscode": "^1.73.0"
+  },
+  "activationEvents": [
+    "onLanguage:markdown",
+    "onCommand:cherrymarkdown.preview"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cherrymarkdown.preview",
+        "title": "Open in Cherry Markdown Editor"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "cherrymarkdown.preview",
+        "key": "ctrl+alt+e",
+        "when": "editorTextFocus && editorLangId == markdown"
+      }
+    ]
+  },
+  "dependencies": {
+    "cherry-markdown": "^0.11.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/vscode": "^1.73.0",
+    "esbuild": "^0.24.2",
+    "typescript": "^4.9.5"
+  },
+  "scripts": {
+    "build": "yarn install --ignore-engines && node build.js"
+  }
+}

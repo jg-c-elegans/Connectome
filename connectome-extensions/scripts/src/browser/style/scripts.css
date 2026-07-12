@@ -1,0 +1,38 @@
+.connectome-scripts-section {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.connectome-scripts-sort {
+    display: flex;
+    gap: 8px;
+    padding: 4px 8px;
+    font-size: 11px;
+    opacity: 0.75;
+}
+
+.connectome-scripts-sort-option {
+    cursor: pointer;
+}
+
+.connectome-scripts-sort-option.active {
+    font-weight: 600;
+    opacity: 1;
+}
+
+.connectome-scripts-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.connectome-scripts-run-btn {
+    margin-left: auto;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.connectome-scripts-run-btn:hover {
+    opacity: 1;
+}

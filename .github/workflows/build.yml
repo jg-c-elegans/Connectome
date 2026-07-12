@@ -1,0 +1,76 @@
+name: Build, package and test Connectome Desktop
+
+on:
+  push:
+    branches: [master]
+    paths-ignore: ['**/*.md']
+  pull_request:
+    branches: [master]
+    paths-ignore: ['**/*.md']
+  workflow_dispatch:
+  schedule:
+    - cron: "0 4 * * *"
+
+jobs:
+  windows-desktop:
+    runs-on: windows-2022
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          fetch-depth: 0
+      - name: Use Node.js 24
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238
+        with:
+          node-version: 24.x
+          registry-url: https://registry.npmjs.org
+      - name: Use Python 3.13
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.13"
+      - name: Install dependencies
+        shell: bash
+        run: yarn --frozen-lockfile --skip-integrity-check --network-timeout 100000
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lint
+        run: yarn lint
+      - name: Build extensions
+        run: yarn build:extensions
+      - name: Build and package preview
+        if: github.event_name == 'pull_request'
+        run: |
+          yarn desktop:build:dev
+          yarn download:plugins
+          yarn desktop:package:preview
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and package installer
+        if: github.event_name != 'pull_request'
+        run: |
+          yarn desktop:build
+          yarn download:plugins
+          yarn desktop:package
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test packaged desktop app
+        run: yarn desktop:test
+      - name: Upload test screenshots
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: desktop-test-screenshots
+          path: applications/desktop/test-screenshots/
+          if-no-files-found: ignore
+          retention-days: 5
+      - name: Upload Windows installer
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: connectome-windows-installer
+          path: applications/desktop/dist/ConnectomeSetup.exe
+          if-no-files-found: error
+          retention-days: 7

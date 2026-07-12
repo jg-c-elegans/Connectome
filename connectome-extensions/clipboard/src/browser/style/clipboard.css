@@ -1,0 +1,99 @@
+.connectome-clipboard-gallery-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+    padding: 12px;
+    box-sizing: border-box;
+    /* Defensive: keeps this window readable even if a global stylesheet (e.g. Mantine's base
+       reset, imported by the Dashboard's mini-calendar) shifts the document's default text
+       color — that reset applies app-wide once loaded, not just where it was imported. */
+    color: var(--theia-foreground);
+}
+
+.connectome-clipboard-gallery-toolbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.connectome-clipboard-gallery-filter {
+    cursor: pointer;
+    padding: 2px 10px;
+    border-radius: 4px;
+    opacity: 0.75;
+}
+
+.connectome-clipboard-gallery-filter.active {
+    opacity: 1;
+    font-weight: 600;
+    background: var(--theia-toolbar-activeBackground, rgba(128, 128, 128, 0.2));
+}
+
+.connectome-clipboard-gallery-status {
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    background: rgba(200, 160, 0, 0.12);
+    font-size: 12px;
+}
+
+.connectome-clipboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+}
+
+.connectome-clipboard-card {
+    position: relative;
+    border: 1px solid var(--theia-editorWidget-border, rgba(128, 128, 128, 0.3));
+    border-radius: 6px;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.connectome-clipboard-card:hover {
+    background: var(--theia-list-hoverBackground);
+}
+
+.connectome-clipboard-card-thumb {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: rgba(128, 128, 128, 0.08);
+    border-radius: 4px;
+}
+
+.connectome-clipboard-card-thumb img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.connectome-clipboard-card-icon {
+    font-size: 28px;
+    opacity: 0.6;
+}
+
+.connectome-clipboard-card-label {
+    font-size: 11px;
+    word-break: break-word;
+    max-height: 3.6em;
+    overflow: hidden;
+}
+
+.connectome-clipboard-card-save {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    opacity: 0.6;
+}
+
+.connectome-clipboard-card-save:hover {
+    opacity: 1;
+}

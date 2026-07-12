@@ -1,0 +1,46 @@
+appId: dev.jgrimm.connectome
+productName: Connectome
+copyright: "Copyright © 2026 James Grimm, Elegans Labs"
+electronDist: ../../node_modules/electron/dist
+electronVersion: 39.8.7
+asar: true
+asarUnpack:
+  - "**/lib/backend/native/**"
+  - "**/lib/backend/shell-integrations/**"
+  - "**/lib/prebuilds/**"
+nodeGypRebuild: false
+npmRebuild: false
+
+directories:
+  buildResources: resources
+
+files:
+  - src-gen
+  - lib
+  - resources/icons/WindowIcon/512-512.png
+  - resources/ConnectomeSplash.svg
+  - scripts
+  - "!**node_modules/**"
+extraResources:
+  - from: ../../plugins
+    to: app/plugins
+
+win:
+  icon: resources/icons/WindowsLauncherIcons/Connectome.ico
+  target:
+    - nsis
+
+nsis:
+  menuCategory: true
+  oneClick: false
+  perMachine: false
+  deleteAppDataOnUninstall: true
+  installerHeaderIcon: resources/icons/WindowsLauncherIcons/Connectome.ico
+  installerIcon: resources/icons/WindowsLauncherIcons/Connectome.ico
+  uninstallerIcon: resources/icons/WindowsLauncherIcons/Connectome.ico
+  installerSidebar: resources/icons/InstallerSidebarImage/164-314Windows.bmp
+  uninstallerSidebar: resources/icons/InstallerSidebarImage/164-314Windows.bmp
+  allowToChangeInstallationDirectory: true
+  runAfterFinish: false
+  artifactName: ${productName}Setup.${ext}
+  license: LICENSE

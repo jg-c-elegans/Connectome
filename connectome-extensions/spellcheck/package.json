@@ -1,0 +1,51 @@
+{
+  "private": true,
+  "name": "connectome-spellcheck-ext",
+  "version": "1.2.2",
+  "description": "Connectome spell-checking: squiggly diagnostics and quick fixes for markdown/text and code comments/strings",
+  "author": "James Grimm <contact@jgrimm.dev>",
+  "dependencies": {
+    "@theia/core": "1.73.1",
+    "@theia/editor": "1.73.1",
+    "@theia/filesystem": "1.73.1",
+    "@theia/markers": "1.73.1",
+    "@theia/monaco": "1.73.1",
+    "@theia/monaco-editor-core": "1.108.201",
+    "@theia/workspace": "1.73.1",
+    "inversify": "^6.2.2",
+    "nspell": "^2.1.5"
+  },
+  "devDependencies": {
+    "rimraf": "^2.7.1",
+    "typescript": "^4.9.5"
+  },
+  "theiaExtensions": [
+    {
+      "frontend": "lib/browser/spellcheck-frontend-module"
+    }
+  ],
+  "keywords": [
+    "connectome-extension"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jg-c-elegans/connectome.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jg-c-elegans/connectome/issues"
+  },
+  "homepage": "https://github.com/jg-c-elegans/connectome#readme",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rimraf lib *.tsbuildinfo",
+    "build": "tsc -b",
+    "lint": "eslint --ext js,jsx,ts,tsx src",
+    "lint:fix": "eslint --ext js,jsx,ts,tsx src --fix",
+    "update:theia": "ts-node ../../scripts/update-theia-version.ts",
+    "update:next": "ts-node ../../scripts/update-theia-version.ts next"
+  }
+}
